@@ -1,4 +1,4 @@
-const version = `Hello World`
+const version = `BadBoi`
 
 try
 {
@@ -244,3 +244,120 @@ Commands.push(
 	}
 })
 
+Commands.push(
+{
+	name: 'tag',
+	aliases: ["t"],
+	help: 'Tagging system',
+	usage: '-t tagname; -t create tagname',
+	noDM: true,
+	hidden: false,
+	level: 0,
+	fn: function(msg, suffix, bot)
+	{
+		tagdir = drive+':/resources/boitags.json'
+		mode = suffix.split(" ")[0]
+		//tags = require(tagdir)
+		var tags = JSON.parse(fs.readFileSync(tagdir,"utf8"))
+		
+		
+		if (!suffix)
+		{var rand = tags[Math.floor(Math.random() * tags.length)];
+			return msg.channel.sendMessage("\`"+ rand.name +"\` "+rand.value)
+		}
+		suffix = suffix.replace(suffix.split(" ")[0] + " ", "")
+		name = suffix.split(" ")[0]
+		value = suffix.replace(suffix.split(" ")[0] + " ", "")
+		owner = msg.author.id
+		console.log(name, value, owner)
+		switch (mode)
+		{
+			case 'create':
+				if (tags.filter(e => e.name == name).length > 0)
+				{
+					if(tags.filter(e => e.name == name)[0].owner == owner)
+					{	tag=tags.filter(e => e.name == name)[0]
+					 	tags = tags.filter(e => e.name != name)
+						console.log(name, value, owner, "Editing")
+					 	msg.addReaction('☑')
+					 	tags.push({name: name,value: value,owner: owner})
+					 	return fs.writeFileSync(tagdir, JSON.stringify(tags))
+					}
+					return msg.channel.sendMessage("Tag already exists")
+				}
+				else
+				{
+					tags.push(
+					{
+						name: name,
+						value: value,
+						owner: owner
+					})
+					console.log(name, value, owner, "Saving")
+					msg.addReaction('☑')
+					return fs.writeFileSync(tagdir, JSON.stringify(tags))
+				}
+				break;
+			case 'delete':
+				if (tags.filter(e => e.name == name).length > 0)
+				{	tag=tags.filter(e => e.name == name)[0]
+				 	if(tag.owner == owner || owner == botowner)
+					{
+						tags = tags.filter(e => e.name != name)
+						console.log(name, value, owner, "Deleting")
+						msg.addReaction('☑')
+						return fs.writeFileSync(tagdir, JSON.stringify(tags))
+					}
+				 	else
+					{
+						return msg.channel.sendMessage("Tag is not yours to edit.")
+					}
+					
+				}
+				else
+				{
+					return msg.channel.sendMessage("Tag doesnt exist.")
+				}
+				break;
+			case 'owner':
+				if (tags.filter(e => e.name == name).length > 0)
+				{	
+					tag=tags.filter(e => e.name == name)[0]
+					var tagowner = client.users.find(e => e.id == tag.owner).tag
+				 	return msg.reply("This tag is owned by "+tagowner)
+				}				
+				else
+				{
+					return msg.channel.sendMessage("Tag doesnt exist.")
+				}
+				break;
+			default:
+				if (tags.filter(e => e.name == name)[0])
+				{
+					return msg.channel.sendMessage(tags.filter(e => e.name == name)[0].value)
+				}
+				else
+				{
+					return msg.channel.sendMessage("Tag does not exist")
+				}
+				break;
+		}
+	}
+})
+
+Commands.push(
+{
+	name: 'kill',
+	aliases: ["k"],
+	help: '',
+	usage: '',
+	noDM: false,
+	hidden: true,
+	level: 'master',
+	fn: function(msg, suffix, bot, client)
+	{
+		client.destroy()
+		bot.disconnect()
+		process.exit()
+	}
+})
