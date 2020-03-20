@@ -244,6 +244,7 @@ Commands.push({
     noDM: true,
     hidden: false,
     level: 0,
+    permFlag: 3,
     fn: function(msg, suffix, bot) {
         tagdir = drive + ':/resources/boitags.json'
         mode = suffix.split(" ")[0]
