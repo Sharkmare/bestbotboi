@@ -18,7 +18,7 @@ if(Config.bot.dir)
 const botmain = require("discordie"),
 	logchannel = "300131285634908163",
 	botowner = "201983882625548299",
-const axios = require('axios'); //better HTML request.
+	axios = require('axios'); //better HTML request.
 //const sharp = require('sharp'); //Image processing.
 const Path = require('path');
 const isUp = require('is-up');
