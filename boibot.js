@@ -72,7 +72,7 @@ bot.Dispatcher.on("GATEWAY_READY", e => {
 
 
     console.log("Connected as: " + bot.User.username);
-    bot.User.setStatus("online", game)
+    //bot.User.setStatus("online", game)
     console.log(bot.User)
     bot.Channels.get(logchannel).sendMessage("Systems online. Version: " + version + "\nBoot Code: " + bot.isFirstConnect + "\n" + "Connected to: " + servers + " Servers")
     var namedservers = [];
@@ -85,26 +85,6 @@ bot.Dispatcher.on("GATEWAY_READY", e => {
     bot.Channels.get(logchannel).sendMessage(namedservers.join(" | "))
     console.log("Connected to:", servers)
     bot.isFirstConnect = 0
-
-
-    var URL = "https:\\\\api.vrchat.cloud/api/1/worlds/wrld_05be1d4a-72ae-489b-93bd-489d2b78abc5?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26";
-    axios.get(URL, {
-            headers: {}
-        })
-        .then(response => {
-            var game = "Favorited: " + response.data.favorites + "| Visited: " + response.data.visits
-            client.user.setPresence({
-                    activity: {
-                        name: game
-                    },
-                    status: 'online'
-                })
-                .then(console.log)
-                .catch(console.error);
-        })
-        .catch((error) => {
-            console.log('error 3 ' + error)
-        })
 
 });
 
