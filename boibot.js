@@ -72,7 +72,15 @@ bot.Dispatcher.on("GATEWAY_READY", e =>
 	bot.Channels.get(logchannel).sendMessage(namedservers.join(" | "))
 	console.log("Connected to:", servers)
 	bot.isFirstConnect = 0
-});
+	
+	{var URL = "https:\\\\api.vrchat.cloud/api/1/worlds/wrld_05be1d4a-72ae-489b-93bd-489d2b78abc5?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26";axios.get(URL, { headers: {} })
+		.then(response => {
+		game.name = "Favorited by " + response.data.favorites + " Bois"
+		bot.User.setStatus("online", game)
+		})
+		.catch((error) => {console.log('error 3 ' + error)}) 
+}});
+
 bot.Dispatcher.on("DISCONNECTED", e =>
 {
 	return console.log("Connection lost", console.log(servers))
@@ -361,7 +369,7 @@ Commands.push(
 		process.exit()
 	}
 })
-
+/*
 Commands.push({
     name: 'boi',
     help: "bestboi integration",
@@ -378,7 +386,7 @@ Commands.push({
 	 
 	}
 })
-
+*/
 client.on('message', msg => {
   if(!msg || !msg.guild) {return}
 	if (msg.content == "_hasPerms") {
