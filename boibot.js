@@ -52,13 +52,9 @@ client.on('ready', () => {
             headers: {}
         })
         .then(response => {
+	    
             var game = "Favorited: " + response.data.favorites + "| Visited: " + response.data.visits
-            client.user.setPresence({
-                    activity: {
-                        name: game
-                    },
-                    status: 'online'
-                })
+            client.user.setActivity(game, { type: 'WATCHING' })
                 .then(console.log)
                 .catch(console.error);
         })
