@@ -75,7 +75,7 @@ bot.Dispatcher.on("GATEWAY_READY", e =>
 	
 	{var URL = "https:\\\\api.vrchat.cloud/api/1/worlds/wrld_05be1d4a-72ae-489b-93bd-489d2b78abc5?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26";axios.get(URL, { headers: {} })
 		.then(response => {
-		game.name = "Favorited by " + response.data.favorites + " Bois"
+		game.name = "Favorited: " + response.data.favorites + "| Visited: "+response.data.visits
 		bot.User.setStatus("online", game)
 		})
 		.catch((error) => {console.log('error 3 ' + error)}) 
