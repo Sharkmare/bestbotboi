@@ -439,3 +439,91 @@ Commands.push({
 		});
 	}
 })
+
+Commands.push(
+{
+	name: 'help',
+	hidden: false,
+	help: 'Sends a help message.',
+	usage: '-help or help command',
+	noDM: false,
+	level: 0,
+	fn: function(msg, suffix)
+	{
+		console.log(suffix)
+		var msgArray = []
+		var msgArraytwo = []
+		var cmdone = []
+		if (!suffix)
+		{
+			for (var index in Commands)
+			{
+				if (Commands[index].hidden || Commands[index].level === 'master')
+				{
+					continue
+				}
+				else
+				{
+					cmdone.push(Commands[index].name + ' = "' + Commands[index].help + '"')
+				}
+			}
+			var cmdtwo = cmdone.splice(0, cmdone.length / 2)
+			msgArray.push('**Available Commands:** \n')
+			msgArray.push('```ini')
+			msgArray.push(cmdone.sort().join('\n') + '\n')
+			msgArray.push('```')
+			msgArraytwo.push('```ini')
+			msgArraytwo.push(cmdtwo.sort().join('\n') + '\n')
+			msgArraytwo.push('```')
+			msgArraytwo.push('')
+			msgArraytwo.push('')
+			msgArraytwo.push('')
+			msg.author.openDM().then((y) =>
+			{
+				if (!msg.isPrivate)
+				{
+					msg.channel.sendMessage('Help is underway ' + msg.author.mention + '!')
+				}
+				y.sendMessage(msgArray.join('\n'))
+				y.sendMessage(msgArraytwo.join('\n'))
+			}).catch((e) =>
+			{
+				Logger.error(e)
+				msg.channel.sendMessage('Well, this is awkward, something went wrong while trying to PM you. Do you have them enabled on this server?')
+			})
+		}
+		else if (suffix)
+		{
+			command = Commands.filter(e => e.name == suffix)
+			if (command.length < 1)
+			{
+				CommandsWithAliases = Commands.filter(e => e.aliases) //Ignore commands without aliases
+				command = CommandsWithAliases.filter(e => e.aliases.includes(suffix))
+			}
+			if (command.length > 0)
+			{
+				command = command[0]
+			}
+			else
+			{
+				msg.channel.sendMessage(suffix + " not found.")
+			}
+			text = `\`Name: ${command.name}\`\n`
+			text = text + `\`Description: ${command.help}\`\n`
+			text = text + `\`Level: ${command.level}\`\n`
+			if (command.usage)
+			{
+				text = text + `\`Usage: ${command.usage}\`\n`
+			}
+			if (typeof command.noDM != 'undefined')
+			{
+				text = text + `\`Unusable in DM: ${command.noDM}\`\n`
+			}
+			if (typeof command.hidden != 'undefined' && command.hidden)
+			{
+				text = suffix + " not found."
+			}
+			msg.channel.sendMessage(text)
+		}
+	}
+})
