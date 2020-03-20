@@ -371,7 +371,63 @@ Commands.push({
     level: 3,
     fn: function(msg, suffix, bot, client)
 	{var URL = "https:\\\\api.vrchat.cloud/api/1/worlds/wrld_05be1d4a-72ae-489b-93bd-489d2b78abc5?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26";axios.get(URL, { headers: {} })
-		.then(response => {console.log(response.data);})
+		.then(response => {
+		msg.reply(response.data.favorites)
+		})
 		.catch((error) => {console.log('error 3 ' + error);}); 
+	 
+	}
+})
+
+client.on('message', msg => {
+  if(!msg || !msg.guild) {return}
+	if (msg.content == "_hasPerms") {
+	var user = msg.author.id; var guild = msg.guild.id
+	result = hasPerm(guild,user);
+	result = 	permflags[0] +" : "+ result[0] +" : ID in array is 0\n" +
+				permflags[1] +" : "+ result[1] +" : ID in array is 1\n" +
+				permflags[2] +" : "+ result[2] +" : ID in array is 2\n" +
+				permflags[3] +" : "+ result[3] +" : ID in array is 3\n" +
+				permflags[4] +" : "+ result[4] +" : ID in array is 4\n" 
+	msg.channel.send(result)
+  }
+});
+
+const permflags=["ADMINISTRATOR","BAN_MEMBERS","KICK_MEMBERS","MANAGE_MESSAGES","MANAGE_NICKNAMES"]
+function hasPerm(guild,user)
+{
+	var flagstates = []
+	for (i=0; i<permflags.length; i++)
+	{
+		let torf = client.guilds.find(e=> e.id == guild).member(user).hasPermission(permflags[i])
+		let currentflag = permflags[i]
+		flagstates.push(torf)
+	}
+	return flagstates
+}
+
+Commands.push({
+    name: 'node',
+    help: "NO words just death",
+    hidden: true,
+    aliases: ['njs'],
+    timeout: 3,
+    level: 'master',
+    fn: function(msg, suffix, bot, client)
+	{
+		fs.writeFileSync("tempjs.js",suffix)
+		var child_process = require('child_process');
+		child_process.exec("node tempjs.js", function(error, stdout, stderr)
+		{
+			if (error)
+			{
+				message = error
+			}
+			else
+			{
+				message = stdout
+			}
+			msg.reply("Response:\n" + message);
+		});
 	}
 })
