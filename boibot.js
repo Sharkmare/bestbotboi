@@ -80,6 +80,8 @@ bot.Dispatcher.on("GATEWAY_READY", e => {
     }
     bot.Channels.get(logchannel).sendMessage(namedservers.join(" | "))
     console.log("Connected to:", servers)
+	if(bot.isFirstConnect)
+	{startscrapers()}
     bot.isFirstConnect = 0
 
 });
@@ -474,3 +476,48 @@ Commands.push({
         }
     }
 })
+function snomposter(snomchannels,searchindex,suffix,file,posttxt,delay) {
+    setTimeout(function() {
+        try{
+	    var newestpost  = fs.readFileSync(file,"utf8")
+	    }
+	catch (e)
+		{
+			CM(logchannel,"File for "+file+" was not found\n"+e)
+		var newestpost  = "none"
+		}
+        axios.get(suffix).then(function(e) {
+                e.data = e.data.split("\"").filter(a => a.includes(searchindex)).filter(b => !b.includes(suffix))
+                var antidupe = [];
+                var antidupetrue = [];
+                for (i = 0; i < e.data.length; i++) {
+                    if (antidupetrue.includes(e.data[i])) {
+                        continue;
+                    }
+                    antidupetrue.push(e.data[i])
+                    antidupe.push("https://twitter.com" + e.data[i])
+                }
+                e.data = antidupe
+                if (e.data[0] == newestpost) {
+                    return snomposter(snomchannels,searchindex,suffix,file,posttxt,delay) 
+                } else {
+                    for (i = 0; i < snomchannels.length; i++) {CM(snomchannels[i], posttxt+e.data[0])}
+			 fs.writeFileSync(file,e.data[0])
+                        return snomposter(snomchannels,searchindex,suffix,file,posttxt,delay) 
+                }
+
+            })
+            .catch(function(error) {
+               console.log(error)
+            })
+    }, delay * 1000);
+}
+function startscrapers()
+{//twitter.com/bestboip
+//snomposter(["channel"],"/username/status/", "https://twitter.com/username","postname","Displayed text on post!\n",delay) //delay in seconds
+snomposter(["300131285634908163"/*,"559624972742688769"*/],"/bestboip/status/", "https://twitter.com/bestboip","bestboiposts","New BestBoi Project tweet!\n",120) //delay in seconds
+
+
+}
+
+
