@@ -503,7 +503,7 @@ function snomposter(snomchannels,searchindex,suffix,file,posttxt,delay) {
 function startscrapers()
 {//twitter.com/bestboip
 //snomposter(["channel"],"/username/status/", "https://twitter.com/username","postname","Displayed text on post!\n",delay) //delay in seconds
-snomposter(["300131285634908163"/*,"559624972742688769"*/],
+snomposter(["300131285634908163","559624972742688769"],
 	   "/BestboiP/status/", "https://twitter.com/BestboiP","bestboiposts","New BestBoi Project tweet!\n",120) //delay in seconds
 
 }
