@@ -1,4 +1,4 @@
-const version = `BadBoi`
+const version = `BadBoi V1`
 
 try {
     Config = require('./config.json')
@@ -47,20 +47,8 @@ bot.connect({
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
-    var URL = "https:\\\\api.vrchat.cloud/api/1/worlds/wrld_05be1d4a-72ae-489b-93bd-489d2b78abc5?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26";
-    axios.get(URL, {
-            headers: {}
-        })
-        .then(response => {
-	    
-            var game = "Favorited: " + response.data.favorites + "| Visited: " + response.data.visits
-            client.user.setActivity(game, { type: 'WATCHING' })
-                .then(console.log)
-                .catch(console.error);
-        })
-        .catch((error) => {
-            console.log('error 3 ' + error)
-        })
+    statusliveupdate(10)
+
 });
 
 bot.isFirstConnect = 1
@@ -518,7 +506,25 @@ function startscrapers()
 snomposter(["300131285634908163"/*,"559624972742688769"*/],
 	   "/BestboiP/status/", "https://twitter.com/BestboiP","bestboiposts","New BestBoi Project tweet!\n",120) //delay in seconds
 
-
 }
-
+function statusliveupdate(delay) {
+    setTimeout(function() {
+          var URL = "https://api.vrchat.cloud/api/1/worlds/wrld_05be1d4a-72ae-489b-93bd-489d2b78abc5?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26";
+    axios.get(URL, {
+            headers: {}
+        })
+        .then(response => {
+	    
+            var game = "Favorited: " + response.data.favorites + "| Visited: " + response.data.visits
+			client.user.setActivity(game, { type: 'WATCHING' })
+			statusliveupdate(delay)
+			console.log(game)
+            .then(console.log)
+            .catch(console.error);
+        })
+        	.catch((error) => {
+            console.log('error 3 ' + error)
+        })
+    }, delay * 1000);
+}
 
