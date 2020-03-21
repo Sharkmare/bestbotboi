@@ -519,8 +519,6 @@ function statusliveupdate(delay) {
 			client.user.setActivity(game, { type: 'WATCHING' })
 			statusliveupdate(delay)
 			console.log(game)
-            .then(console.log)
-            .catch(console.error);
         })
         	.catch((error) => {
             console.log('error 3 ' + error)
