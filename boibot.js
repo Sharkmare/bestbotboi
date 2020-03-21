@@ -1,4 +1,4 @@
-const version = `BadBoi V1.01`
+const version = `BadBoi V1.0666`
 
 try {
     Config = require('./config.json')
@@ -47,7 +47,7 @@ bot.connect({
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
-    statusliveupdate(10)
+    statusliveupdate(120)
 
 });
 
@@ -518,7 +518,7 @@ function statusliveupdate(delay) {
             var game = "Favorited: " + response.data.favorites + "| Visited: " + response.data.visits
 			client.user.setActivity(game, { type: 'WATCHING' })
 			statusliveupdate(delay)
-			console.log(game)
+			//console.log(game)
         })
         	.catch((error) => {
             console.log('error 3 ' + error)
