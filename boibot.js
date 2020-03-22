@@ -514,7 +514,8 @@ function statusliveupdate(delay) {
             headers: {}
         })
         .then(response => {
-	    
+	    bot.Channels.get('691022282981900328').update("world fav count: "+response.data.favorites)
+	    bot.Channels.get('691022699048206386').update("world visit count: "+response.data.visits)
             var game = "Favorited: " + response.data.favorites + "| Visited: " + response.data.visits
 			client.user.setActivity(game, { type: 'WATCHING' })
 			statusliveupdate(delay)
