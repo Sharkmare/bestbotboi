@@ -1,4 +1,4 @@
-const version = `BadBoi V2.9666`
+const version = `BadBoi V2.91666`
 
 try {
     Config = require('./config.json')
@@ -47,6 +47,7 @@ bot.connect({
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
+	var url = "https://api.vrchat.cloud/api/1/worlds/wrld_05be1d4a-72ae-489b-93bd-489d2b78abc5?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26"
 	axios.get( url,{auth:{username: Config.vrchat.user,password: Config.vrchat.password}} ).then(function(e) {
 		   //console.log(e.data)
 		   var game = "Public: " + e.data.publicOccupants + " | Private: " + e.data.privateOccupants
