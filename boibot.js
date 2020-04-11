@@ -1,4 +1,4 @@
-const version = `BadBoi V2.7666`
+const version = `BadBoi V2.8666`
 
 try {
     Config = require('./config.json')
@@ -47,7 +47,7 @@ bot.connect({
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
-    statusliveupdate(600)
+    statusliveupdate(1800)
 
 });
 
