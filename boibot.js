@@ -1,4 +1,4 @@
-const version = `BadBoi V2.8666`
+const version = `BadBoi V2.9666`
 
 try {
     Config = require('./config.json')
