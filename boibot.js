@@ -47,7 +47,7 @@ bot.connect({
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
-    statusliveupdate(120)
+    statusliveupdate(600)
 
 });
 
