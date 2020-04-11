@@ -510,13 +510,11 @@ snomposter(["300131285634908163","559624972742688769"],
 function statusliveupdate(delay) {
     setTimeout(function() {
           var URL = "https://api.vrchat.cloud/api/1/worlds/wrld_05be1d4a-72ae-489b-93bd-489d2b78abc5?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26";
-    axios.get(URL, {
-            headers: {}
-        })
+    axios.get(URL, {auth:{username: vrchat.user,password: vrchat.password}})
         .then(response => {
 	    bot.Channels.get('691022282981900328').update("world favs: "+response.data.favorites)
 	    bot.Channels.get('691022699048206386').update("world visits: "+response.data.visits)
-            var game = "Favorited: " + response.data.favorites + "| Visited: " + response.data.visits
+            var game = "Public: " + response.data.publicOccupants + "| Visited: " + response.data.privateOccupants
 			client.user.setActivity(game, { type: 'WATCHING' })
 			statusliveupdate(delay)
 			//console.log(game)
