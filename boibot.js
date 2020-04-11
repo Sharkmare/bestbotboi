@@ -47,6 +47,15 @@ bot.connect({
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
+	axios.get( url,{auth:{username: Config.vrchat.user,password: Config.vrchat.password}} ).then(function(e) {
+		   //console.log(e.data)
+		   var game = "Public: " + e.data.publicOccupants + " | Private: " + e.data.privateOccupants
+		    client.user.setActivity(game, { type: 'WATCHING' })
+		    bot.Channels.get('698556758255468614').update("users in world: "+e.data.publicOccupants)
+		})
+		.catch(function(error) {
+				console.log( error )
+		})
     statusliveupdate(1800)
 
 });
@@ -508,6 +517,7 @@ snomposter(["300131285634908163","559624972742688769"],
 
 }
 function statusliveupdate(delay) {
+	
     setTimeout(function() {
           var URL = "https://api.vrchat.cloud/api/1/worlds/wrld_05be1d4a-72ae-489b-93bd-489d2b78abc5?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26";
     axios.get(URL)
