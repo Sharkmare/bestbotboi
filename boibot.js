@@ -3,7 +3,7 @@ const version = `BadBoi V2.2666`
 try {
     Config = require('./config.json')
 } catch (e) {
-    console.log('Boi.js encountered an error while trying to load the config file, please resolve this issue and restart Fleet\n\n' + e.message)
+    console.log('Boi.js encountered an error while trying to load the config file, please resolve this issue and restart Badboi\n\n' + e.message)
     process.exit()
 }
 var drive = "C"
