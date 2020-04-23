@@ -1,4 +1,4 @@
-const version = `BadBoi V2.91666`
+const version = `BadBoi V2.92666`
 
 try {
     Config = require('./config.json')
@@ -91,6 +91,18 @@ bot.Dispatcher.on("DISCONNECTED", e => {
 function CM(channel, message) {
     bot.Channels.get(channel).sendMessage(message)
 } //Short for Channel message. CM(ChannelID,Message)
+
+bot.Dispatcher.on("MESSAGE_CREATE", e => {
+	if (!e.message.guild) {return}
+	if (e.message.guild) {
+        guild = e.message.guild.name
+	}
+	if (e.message) {
+		msg = e.message
+	}
+	if(msg.author == bot.owner && msg.content.includes("badboy "))
+	{msg.channel.sendMessage(msg.content.replace("badboy ",""))}
+})
 
 bot.Dispatcher.on("MESSAGE_CREATE", e => {
     var antiecho;
