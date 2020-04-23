@@ -100,7 +100,7 @@ bot.Dispatcher.on("MESSAGE_CREATE", e => {
 	if (e.message) {
 		msg = e.message
 	}
-	if(msg.author == bot.owner && msg.content.includes("badboy "))
+	if(msg.author == botowner && msg.content.includes("badboy "))
 	{msg.channel.sendMessage(msg.content.replace("badboy ",""))}
 })
 
