@@ -1,4 +1,4 @@
-const version = `BadBoi V2.96666`
+const version = `BadBoi V2.97.666`
 
 try {
     Config = require('./config.json')
@@ -47,8 +47,13 @@ bot.connect({
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
-	setTimeout(function() {
-	var url = "https://api.vrchat.cloud/api/1/worlds/wrld_05be1d4a-72ae-489b-93bd-489d2b78abc5?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26"
+});
+
+bot.isFirstConnect = 1
+bot.Dispatcher.on("GATEWAY_READY", e => {
+
+if (bot.isFirstConnect)
+	{	var url = "https://api.vrchat.cloud/api/1/worlds/wrld_05be1d4a-72ae-489b-93bd-489d2b78abc5?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26"
 	axios.get( url,{auth:{username: Config.vrchat.user,password: Config.vrchat.password}} ).then(function(e) {
 		   //console.log(e.data)
 		   var game = "Public: " + e.data.publicOccupants + " | Private: " + e.data.privateOccupants
@@ -58,14 +63,7 @@ client.on('ready', () => {
 		.catch(function(error) {
 				console.log( error )
 		})
-    statusliveupdate(1800)
-}, 5 * 1000);
-});
-
-bot.isFirstConnect = 1
-bot.Dispatcher.on("GATEWAY_READY", e => {
-
-
+    statusliveupdate(1800)}
     console.log("Connected as: " + bot.User.username);
     //bot.User.setStatus("online", game)
     console.log(bot.User)
@@ -572,7 +570,7 @@ function statusliveupdate(delay) {
 	    axios.get( url,{auth:{username: Config.vrchat.user,password: Config.vrchat.password}} ).then(function(e) {
 		   //console.log(e.data)
 		   var game = "Public: " + e.data.publicOccupants + " | Private: " + e.data.privateOccupants
-		    client.user.setActivity(game, { type: 'WATCHING' })
+		    //client.user.setActivity(game, { type: 'WATCHING' })
 		    bot.Channels.get('698556758255468614').update("users in homelands: "+e.data.publicOccupants)
 		})
 		.catch(function(error) {
