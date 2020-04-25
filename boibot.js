@@ -1,4 +1,4 @@
-const version = `BadBoi V2.101.666`
+const version = `BadBoi V2.102.666`
 
 try {
     Config = require('./config.json')
@@ -547,7 +547,7 @@ function statusliveupdate(delay) {
 		   //console.log(e.data)
 		   var game = "Public: " + e.data.publicOccupants + " | Private: " + e.data.privateOccupants
 		    //client.user.setActivity(game, { type: 'WATCHING' })
-		    bot.Channels.get('698556758255468614').update("users in homelands: "+e.data.publicOccupants)
+		    bot.Channels.get('698556758255468614').update("homelands users: "+e.data.publicOccupants)
 		})
 		.catch(function(error) {
 				console.log( error )
