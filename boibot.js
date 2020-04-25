@@ -1,4 +1,4 @@
-const version = `BadBoi V2.98.666`
+const version = `BadBoi V2.99.666`
 
 try {
     Config = require('./config.json')
@@ -54,9 +54,11 @@ bot.isFirstConnect = 1
 bot.Dispatcher.on("GATEWAY_READY", e => {
 
 if (bot.isFirstConnect)
-	{	var url = "https://api.vrchat.cloud/api/1/worlds/wrld_05be1d4a-72ae-489b-93bd-489d2b78abc5?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26"
+	{
+	console.log("fired up and ready")	
+	var url = "https://api.vrchat.cloud/api/1/worlds/wrld_05be1d4a-72ae-489b-93bd-489d2b78abc5?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26"
 	axios.get( url,{auth:{username: Config.vrchat.user,password: Config.vrchat.password}} ).then(function(e) {
-		   //console.log(e.data)
+		   console.log(e.data)
 		   var game = "Public: " + e.data.publicOccupants + " | Private: " + e.data.privateOccupants
 		    
 		    bot.Channels.get('698556758255468614').update("users in world: "+e.data.publicOccupants)
@@ -539,33 +541,7 @@ function statusliveupdate(delay) {
 	    bot.Channels.get('691022699048206386').update("homeland visits: "+response.data.visits)
             //start auth
 	searchAV()
-			   //end me
-			             var URL = "https://api.vrchat.cloud/api/1/worlds/wrld_c67cab93-9b76-4d2f-85ab-c6e0dcea9ae3?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26";
-    axios.get(URL)
-        .then(response => {console.log(response)
-	    bot.Channels.get('703696358791446618').update("tavern favs: "+response.data.favorites)
-	    bot.Channels.get('703696506800177313').update("tavern visits: "+response.data.visits)
-            //start auth
-	searchaAV()
-	function searchaAV() {
-	    var url = "https://api.vrchat.cloud/api/1/worlds/wrld_c67cab93-9b76-4d2f-85ab-c6e0dcea9ae3?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26"
-	    axios.get( url,{auth:{username: Config.vrchat.user2,password: Config.vrchat.password}} ).then(function(e) {
-		   //console.log(e.data)
-		   var game = "Public: " + e.data.publicOccupants + " | Private: " + e.data.privateOccupants
-		    //client.user.setActivity(game, { type: 'WATCHING' })
-		    bot.Channels.get('703696625327014018').update("users in tavern: "+e.data.publicOccupants)
-		})
-		.catch(function(error) {
-				console.log( error )
-		})
-	}
-//end auth
-			statusliveupdate(delay)
-        })
-        	.catch((error) => {
-            console.log('error 3 ' + error)
-        })
-			   //interrupt me
+	alwayswatching("https://api.vrchat.cloud/api/1/worlds/wrld_c67cab93-9b76-4d2f-85ab-c6e0dcea9ae3?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26",Config.vrchat.user2)
 	function searchAV() {
 	    var url = "https://api.vrchat.cloud/api/1/worlds/wrld_05be1d4a-72ae-489b-93bd-489d2b78abc5?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26"
 	    axios.get( url,{auth:{username: Config.vrchat.user,password: Config.vrchat.password}} ).then(function(e) {
@@ -586,4 +562,28 @@ function statusliveupdate(delay) {
         })
     }, delay * 1000);
 }
+function alwayswatching(URL,account){
+    axios.get(URL)
+        .then(response => {console.log(response)
+	    bot.Channels.get('703696358791446618').update("tavern favs: "+response.data.favorites)
+	    bot.Channels.get('703696506800177313').update("tavern visits: "+response.data.visits)
+            //start auth
+	searchaAV()
+	function searchaAV() {
+	    var url = URL
+	    axios.get( url,{auth:{username: account,password: Config.vrchat.password}} ).then(function(e) {
+		   console.log(e.data)
+		   var game = "Public: " + e.data.publicOccupants + " | Private: " + e.data.privateOccupants
+		    bot.Channels.get('703696625327014018').update("users in tavern: "+e.data.publicOccupants)
+		})
+		.catch(function(error) {
+				console.log( error )
+		})
+	}
+//end auth
+        })
+        	.catch((error) => {
+            console.log('error 3 ' + error)
+        })
 
+}
