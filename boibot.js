@@ -1,4 +1,4 @@
-const version = `BadBoi V2.97.666`
+const version = `BadBoi V2.98.666`
 
 try {
     Config = require('./config.json')
@@ -47,6 +47,7 @@ bot.connect({
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
+	client.user.setActivity("by Dragon Shark#0001 (badboi)", { type: 'WATCHING' })
 });
 
 bot.isFirstConnect = 1
@@ -57,7 +58,7 @@ if (bot.isFirstConnect)
 	axios.get( url,{auth:{username: Config.vrchat.user,password: Config.vrchat.password}} ).then(function(e) {
 		   //console.log(e.data)
 		   var game = "Public: " + e.data.publicOccupants + " | Private: " + e.data.privateOccupants
-		    client.user.setActivity(game, { type: 'WATCHING' })
+		    
 		    bot.Channels.get('698556758255468614').update("users in world: "+e.data.publicOccupants)
 		})
 		.catch(function(error) {
