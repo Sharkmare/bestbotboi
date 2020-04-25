@@ -47,6 +47,7 @@ bot.connect({
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
+	setTimeout(function() {
 	var url = "https://api.vrchat.cloud/api/1/worlds/wrld_05be1d4a-72ae-489b-93bd-489d2b78abc5?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26"
 	axios.get( url,{auth:{username: Config.vrchat.user,password: Config.vrchat.password}} ).then(function(e) {
 		   //console.log(e.data)
@@ -58,7 +59,7 @@ client.on('ready', () => {
 				console.log( error )
 		})
     statusliveupdate(1800)
-
+}, 5 * 1000);
 });
 
 bot.isFirstConnect = 1
