@@ -1,4 +1,4 @@
-const version = `BadBoi V2.100.666`
+const version = `BadBoi V2.101.666`
 
 try {
     Config = require('./config.json')
@@ -60,7 +60,7 @@ if (bot.isFirstConnect)
 	var url = "https://api.vrchat.cloud/api/1/worlds/wrld_05be1d4a-72ae-489b-93bd-489d2b78abc5?apiKey=JlE5Jldo5Jibnk5O5hTx6XVqsJu4WJ26"
 	axios.get( url,{auth:{username: Config.vrchat.user,password: Config.vrchat.password}} ).then(function(e) {
 		   console.log(e.data)
-		    bot.Channels.get('698556758255468614').update("users in homelands: "+e.data.publicOccupants)
+		    bot.Channels.get('698556758255468614').update("homelands users: "+e.data.publicOccupants)
 		})
 		.catch(function(error) {
 				console.log( error )
@@ -573,7 +573,7 @@ function alwayswatching(URL,account){
 	    axios.get( url,{auth:{username: account,password: Config.vrchat.password}} ).then(function(e) {
 		   console.log(e.data)
 		   var game = "Public: " + e.data.publicOccupants + " | Private: " + e.data.privateOccupants
-		    bot.Channels.get('703696625327014018').update("users in tavern: "+e.data.publicOccupants)
+		    bot.Channels.get('703696625327014018').update("tavern users: "+e.data.publicOccupants)
 		})
 		.catch(function(error) {
 				console.log( error )
