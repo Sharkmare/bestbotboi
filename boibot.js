@@ -509,11 +509,11 @@ function snomposter(snomchannels,searchindex,suffix,file,posttxt,delay) {
                     antidupe.push("https://twitter.com" + e.data[i])
                 }
                 e.data = antidupe
-                if (e.data[0] == newestpost) {
+                if (e.data[1] == newestpost) {
                     return snomposter(snomchannels,searchindex,suffix,file,posttxt,delay) 
                 } else {
-                    for (i = 0; i < snomchannels.length; i++) {CM(snomchannels[i], posttxt+e.data[0])}
-			 fs.writeFileSync(file,e.data[0])
+                    for (i = 0; i < snomchannels.length; i++) {CM(snomchannels[i], posttxt+e.data[1])}
+			 fs.writeFileSync(file,e.data[1])
                         return snomposter(snomchannels,searchindex,suffix,file,posttxt,delay) 
                 }
 
