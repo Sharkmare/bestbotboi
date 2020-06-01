@@ -509,10 +509,15 @@ function snomposter(snomchannels,searchindex,suffix,file,posttxt,delay) {
                     antidupe.push("https://twitter.com" + e.data[i])
                 }
                 e.data = antidupe
+		if (!e.data[1]) {return console.log("HOLY FUCKING SHIT HOW THE FUCK DID THIS HAPPEN FUCK YOU TWITTER")}
+		
                 if (e.data[1] == newestpost) {
-                    return snomposter(snomchannels,searchindex,suffix,file,posttxt,delay) 
+                     return snomposter(snomchannels,searchindex,suffix,file,posttxt,delay) 
                 } else {
-                    for (i = 0; i < snomchannels.length; i++) {CM(snomchannels[i], posttxt+e.data[1])}
+                    for (i = 0; i < snomchannels.length; i++) {
+			    
+			    //CM(snomchannels[i], posttxt+e.data[1])
+		    }
 			 fs.writeFileSync(file,e.data[1])
                         return snomposter(snomchannels,searchindex,suffix,file,posttxt,delay) 
                 }
